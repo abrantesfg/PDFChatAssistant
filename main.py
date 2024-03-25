@@ -4,8 +4,6 @@ import fitz  # PyMuPDF
 import PyPDF2
 from gensim.summarization import summarize
 
-openai.api_key = "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"
-
 def get_response(messages):
     """
     Sends messages to the OpenAI chat completion API and returns the response.
@@ -122,7 +120,7 @@ def chat():
 
     No parameters or returns as this function is designed to run interactively.
     """
-    
+
     messages = []
     # Set some limits to prevent infinite loops
     max_pdfs = 1000
