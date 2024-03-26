@@ -4,7 +4,9 @@ This repo contains the code for the PDFChatAssistant project. In the code, the s
 
 ## Pre-requisites
 
-This code requires the installation of the packages: openai, PyMuPDF, PyPDF2 and gensim
+This code requires the installation of the packages: openai, PyMuPDF, PyPDF2 and gensim.
+
+In addition, paste your OpenAI api key in the `config.json` file in order to be able to use the system.
 
 ## Using the chatbox
 
