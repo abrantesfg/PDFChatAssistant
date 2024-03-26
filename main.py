@@ -1,8 +1,29 @@
 from openai import OpenAI
 import openai
-import fitz  # PyMuPDF
+import json
+import fitz
 import PyPDF2
 from gensim.summarization import summarize
+
+
+def load_config(config_path='config.json'):
+    """
+    Loads the API key from a JSON configuration file.
+
+    Parameters:
+    - config_path (str): The path to the JSON configuration file.
+
+    Returns:
+    - dict: A dictionary containing configuration parameters.
+    """
+
+    with open(config_path, 'r') as config_file:
+        config = json.load(config_file)
+    return config
+
+# Load and set the OpenAI api key to use the chat system. Paste your api in the config.json file for security reasons.
+config = load_config()
+openai.api_key = config['openai_api_key']
 
 def get_response(messages):
     """
@@ -105,6 +126,7 @@ def add_message(messages, content, role):
     Returns:
     - list of dict: The updated list of messages including the newly added message.
     """
+
     message = {"role": role, "content": content}
     messages.append(message)
     return messages
@@ -120,9 +142,9 @@ def chat():
 
     No parameters or returns as this function is designed to run interactively.
     """
-
+    
     messages = []
-    # Set some limits to prevent infinite loops
+    # Set limits to prevent infinite loops
     max_pdfs = 1000
     max_messages = 10000
 
@@ -135,17 +157,20 @@ def chat():
             pdf_path = prompt.strip()
             if pdf_path.endswith(".pdf") or pdf_path.startswith(".PDF"):
                 try:
+
+                    # Extract text from PDF document and summarize it to avoid extrapolating the Tokens per Limit (TPR) allowed
                     raw_text = extract_text_from_pdf(pdf_path)
                     pdf_text = summarize_text(raw_text, word_count=1000)  # Adjust word_count as needed
 
-                    # pdf_text = extract_text_from_pdf(pdf_path)
                     pdf_text+= "Users can exit the chat by typing 'exit' at any time."
+
                     # ========== Get that catchy title ==========
                     messages = add_message(messages, pdf_text, "system")  # Adding PDF text as a message from the system
                     messages = add_message(messages, "What is a short catchy title for this pdf?", "user")
                     title = get_response(messages)
                     messages = add_message(messages, title, "assistant")
 
+                    # Start the conversation about the PDF
                     print("="*10 + f"{title}" + "="*10 + "\nWhat would you like to know? (Type 'exit' to quit)")
                     
                     # ========== Chat with the assistant ==========
@@ -166,4 +191,3 @@ def chat():
 
 if __name__ == "__main__":
     chat()
-
