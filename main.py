@@ -1,8 +1,8 @@
-from openai import OpenAI
-import openai
 import json
 import fitz
 import PyPDF2
+import openai
+from openai import OpenAI
 from gensim.summarization import summarize
 
 
