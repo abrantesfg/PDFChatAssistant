@@ -21,7 +21,8 @@ def load_config(config_path='config.json'):
         config = json.load(config_file)
     return config
 
-# Load and set the OpenAI api key to use the chat system. Paste your api in the config.json file for security reasons.
+# Load and set the OpenAI api key to use the chat system.
+# Paste your api in the config.json file for security reasons.
 config = load_config()
 openai.api_key = config['openai_api_key']
 
