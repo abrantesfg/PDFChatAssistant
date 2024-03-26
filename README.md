@@ -10,7 +10,7 @@ In addition, paste your OpenAI api key in the `config.json` file in order to be 
 
 ## Using the chatbox
 
-To interact with the system, run the command line
+To interact with the system, run the command line:
 
 `python3 main.py`
 
@@ -19,3 +19,5 @@ First the system will as for the PDF path:
 `Enter a PDF path to interact with or type 'exit' to quit:<path/to/pdf>`
 
 Once loaded, the user can query on the PDF document. 
+
+
